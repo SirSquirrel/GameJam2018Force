@@ -4,38 +4,40 @@ using UnityEngine;
 
 public class enemyAI : MonoBehaviour {
 
+	float distanceToAggroPlayer = 35;
+	float distanceToShootPlayer = 7;
+	float maxWanderingVelocity = 1.5f;
+	float wanderingAIRotationStrength = 0.3f;
+	float turningSpeed = 3.0f; // Aggroed Turning Speed
+	float distanceToTurnAwayFromPlayer = 3.5f;
+	float distanceToOrbitPlayer = 4.5f;
+	public bool orbitingDirection = false;
+
+	float maxAggroedVelocity = 2.5f; // 1.5f
+
 	public string shipType = "Fighter";
 	public bool aggroed = false;
-	public float distanceToAggroPlayer = 16;
-	public float distanceToShootPlayer = 5;
+
 	float distanceToPlayer = 1000;
 
 	int wanderingAIState = 0;
 	int wanderingAIStateCounter = 100;
 	int wanderingAIStateCounterLength = 50;
-	float wanderingAIRotationStrength = 0.3f;
-	float maxWanderingVelocity = 1.5f;
 
 	int aggroedAIState = 0;
 	int aggroedAIStateCounter = 100;
 	int aggroedAIStateCounterLength = 50;
-	float maxAggroedVelocity = 2.5f; // 1.5f
 
-	float turningSpeed = 3.0f;
 	float xRandomMoveTo = 0;
 	float yRandomMoveTo = 0;
 	float xRandomMoveTo2 = 0;
 	float yRandomMoveTo2 = 0;
-	float distanceToTurnAwayFromPlayer = 3.5f;
-	float distanceToOrbitPlayer = 4.5f;
-	public bool orbitingDirection = false;
 
 	int firingCooldownCounter = 0;
 	int firingCooldownCounterLength = 50;
 
 	Vector3 playerPosition;
 	Vector3 dir;
-
 
 	public GameObject enemyProjectile;
 	public GameObject bigEnemyProjectile;
@@ -63,10 +65,11 @@ public class enemyAI : MonoBehaviour {
 			} else if (shipType == "Orbiter") {
 				updateOrbiterAggroAI ();
 			} else if (shipType == "Dreadnaught") {
-				maxAggroedVelocity = 1;
+				maxAggroedVelocity = 0.5f;
 				//distanceToAggroPlayer = 15;
 				//distanceToShootPlayer = 10;
 				distanceToTurnAwayFromPlayer = 5.5f;
+				turningSpeed = 0.8f;
 				updateFighterAggroAI ();
 			}
 
@@ -85,7 +88,6 @@ public class enemyAI : MonoBehaviour {
 		}
 
 		// Enemy Ship Moves Forward
-		//gameObject.GetComponent<Rigidbody2D>().velocity = -transform.up * 0.4f;
 		gameObject.GetComponent<Rigidbody2D>().AddForce(-transform.up * 0.4f);
 		if (gameObject.GetComponent<Rigidbody2D> ().velocity.magnitude > maxWanderingVelocity) {
 			gameObject.GetComponent<Rigidbody2D> ().velocity = gameObject.GetComponent<Rigidbody2D> ().velocity.normalized * maxWanderingVelocity;
@@ -115,32 +117,23 @@ public class enemyAI : MonoBehaviour {
 		playerPosition = GameManagerScript.gameManager.player.transform.position;
 		dir = playerPosition - transform.position;
 
-		// Check To Shoot Projectile
-		//checkToShootProjectile();
-
 		aggroedAIStateCounter++;
 		if (aggroedAIStateCounter > aggroedAIStateCounterLength) {
-			aggroedAIState = Random.Range(0, 5);
-			aggroedAIStateCounterLength = Random.Range(70, 150);
+			
 			aggroedAIStateCounter = 0;
-
-			// Steer Away Cancel Velocity
-			if (aggroedAIState == 2) {
-				//gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-			}
 
 			// Firing Random Rate
 			firingCooldownCounterLength = Random.Range(45,65);
 			if (shipType == "Dreadnaught") {
 				maxAggroedVelocity = 1.0f;
-				firingCooldownCounterLength = Random.Range(25,45);
-				distanceToTurnAwayFromPlayer = Random.Range(1.0f,3.0f);
+				firingCooldownCounterLength = Random.Range (25, 45);
+				distanceToTurnAwayFromPlayer = Random.Range (1.0f, 3.0f);
+				aggroedAIStateCounterLength = Random.Range (200, 250);
 
-				// Sidewinding Behavior
-				if (Random.Range (0, 4) == 0) {
-					aggroedAIState = 5;
-				}
-
+				aggroedAIState = 100;
+			} else if (shipType == "Fighter") {
+				aggroedAIState = Random.Range(0, 5);
+				aggroedAIStateCounterLength = Random.Range(70, 150);
 			}
 
 			xRandomMoveTo = Random.Range(-10,10);
@@ -158,6 +151,26 @@ public class enemyAI : MonoBehaviour {
 			} else {
 				yRandomMoveTo2 = Random.Range (-15, -5);
 			}
+
+		}
+			
+
+		// Dreadnaught Steer Directly To the Player
+		if (aggroedAIState == 100) {
+
+			dir = playerPosition - transform.position;
+
+			// Move toward the Player
+			gameObject.GetComponent<Rigidbody2D> ().AddForce (dir);
+			if (gameObject.GetComponent<Rigidbody2D> ().velocity.magnitude > maxAggroedVelocity) {
+				gameObject.GetComponent<Rigidbody2D> ().velocity = gameObject.GetComponent<Rigidbody2D> ().velocity.normalized * maxAggroedVelocity;
+			}
+
+			// Face the Player
+			float angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg;
+			transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.AngleAxis (angle + 90, Vector3.forward), turningSpeed * Time.deltaTime);
+
+			checkToShootProjectileDreadnaught();
 
 		}
 
@@ -183,15 +196,13 @@ public class enemyAI : MonoBehaviour {
 				aggroedAIStateCounter = 0;
 				aggroedAIState = Random.Range (2, 2);
 
-				if (shipType == "Dreadnaught") {
-					GameObject.Instantiate (bigEnemyProjectile, transform.position, transform.rotation);
-				} else {
-					GameObject.Instantiate (enemyProjectile, transform.position, transform.rotation);
-				}
+				GameObject.Instantiate (enemyProjectile, transform.position, transform.rotation);
 
 				firingCooldownCounter = 0;
 
 			}
+
+			checkToShootProjectile();
 				
 		}
 
@@ -266,7 +277,7 @@ public class enemyAI : MonoBehaviour {
 			}
 
 		}
-			
+	
 	}
 
 	void updateOrbiterAggroAI() {
@@ -370,34 +381,7 @@ public class enemyAI : MonoBehaviour {
 			// Orbiting Velocity
 			gameObject.GetComponent<Rigidbody2D>().velocity = -transform.up * 2;
 		}
-
-
-		// Sidewinding Behavior
-		/*
-		// Face sidewide to Player
-		float angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg;
-		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.AngleAxis (angle + 90, Vector3.forward), turningSpeed * Time.deltaTime);
-
-		dir = playerPosition - transform.position;
-		gameObject.GetComponent<Rigidbody2D> ().AddForce (dir);
-		if (gameObject.GetComponent<Rigidbody2D> ().velocity.magnitude > maxAggroedVelocity) {
-			gameObject.GetComponent<Rigidbody2D> ().velocity = gameObject.GetComponent<Rigidbody2D> ().velocity.normalized * maxAggroedVelocity;
-		}
-		*/
-
-
-
-		// Swooping out behavior
-		//gameObject.GetComponent<Rigidbody2D>().AddForce(-transform.up);
-
-		/*
-		//gameObject.GetComponent<Rigidbody2D> ().AddForce (dir);
-		if (gameObject.GetComponent<Rigidbody2D> ().velocity.magnitude > maxAggroedVelocity) {
-			gameObject.GetComponent<Rigidbody2D> ().velocity = gameObject.GetComponent<Rigidbody2D> ().velocity.normalized * maxAggroedVelocity;
-		}
-		*/
-
-
+			
 	}
 
 	bool checkRaycastingForPotentialMissile() {
@@ -453,6 +437,29 @@ public class enemyAI : MonoBehaviour {
 					firingCooldownCounter = 0;
 				}
 					
+			}
+		}
+
+	}
+
+	void checkToShootProjectileDreadnaught() {
+		// Enemy Ship Aggroed Projectile Shooting AI
+		distanceToPlayer = Vector2.Distance (transform.position,GameManagerScript.gameManager.player.transform.position);
+		if (distanceToPlayer < distanceToShootPlayer) {
+
+			if (checkRaycastingForPotentialMissile ()) {
+
+				// Fire Missle
+				firingCooldownCounter++;
+				if (firingCooldownCounter > firingCooldownCounterLength) {
+					if (shipType == "Dreadnaught") {
+						GameObject.Instantiate (bigEnemyProjectile, transform.position, transform.rotation);
+					} else {
+						GameObject.Instantiate (enemyProjectile, transform.position, transform.rotation);
+					}
+					firingCooldownCounter = 0;
+				}
+
 			}
 		}
 

@@ -96,7 +96,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1232714273879606}
   m_LocalRotation: {x: 0, y: 0, z: -0.37217802, w: 0.9281614}
-  m_LocalPosition: {x: 10.23, y: 0.69, z: 0}
+  m_LocalPosition: {x: 8.79, y: 3.05, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4820862512050500}
@@ -312,11 +312,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de7078871a27f1488687e552a3934e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  orbitingDirection: 0
   shipType: Dreadnaught
   aggroed: 0
-  distanceToAggroPlayer: 5
-  distanceToShootPlayer: 5
-  orbitingDirection: 0
   enemyProjectile: {fileID: 1675103332125266, guid: 8db91e696389356419943d2b692b4fcf,
     type: 2}
   bigEnemyProjectile: {fileID: 1310349527860770, guid: 0d2cb3620a463234797c63d8fe59753c,
@@ -352,7 +350,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 397a962a421a6444096e71f9ad92c37d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
