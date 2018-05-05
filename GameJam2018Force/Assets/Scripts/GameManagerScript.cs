@@ -19,7 +19,7 @@ public class GameManagerScript : MonoBehaviour {
     public float maxHealth = 100f;
     public Slider healthSlider;
     public float gameAreaSize = 500f;
-    public float tractorBeamSpeed = 500f;
+    public float tractorBeamSpeed = 5f;
     // Use this for initialization
     void Start() {
         gameManager = this;
@@ -74,7 +74,8 @@ public class GameManagerScript : MonoBehaviour {
         Vector3 direction = player.transform.position - transform.position;
         if (direction.magnitude > gameAreaSize)
         {
-            player.GetComponent<Rigidbody2D>().AddForce(-direction);
+            Debug.Log("pull");
+            player.GetComponent<Rigidbody2D>().AddForce(-direction * tractorBeamSpeed);
         }
     }
 

@@ -4,46 +4,30 @@ using UnityEngine;
 
 public class O2Tank : Debris {
     public float OxyMax = 30f;
+    public bool added = false;
 	// Use this for initialization
 	void Start () {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if (GameManagerScript.gameManager.selected == this)
+	new void Update () {
+        if (added == true && attached == false)
         {
-            if(Input.GetKey(KeyCode.LeftShift))
-            {
-                GameManagerScript.gameManager.selected = null;
-                GetComponent<SpriteRenderer>().color = Color.white;
-            }
-            else if (Input.GetKey(KeyCode.Space) && mouseSelectionCounter < Time.time)
-            {
-                Detach();
-            }
+            GameManagerScript.gameManager.maxOxygen -= OxyMax;
+            GameManagerScript.gameManager.oxygenSlider.maxValue -= OxyMax;
+            added = false;
         }
-        if (reContactReady && reContactCounter < Time.time)
-        {
-            gameObject.layer = 9;
-
-            foreach (Transform child in transform)
-            {
-                child.gameObject.layer = 9;
-            }
-            reContactReady = false;
-        }
-        if (currentHP <= 0)
-        {
-            Die();
-        }
+        base.Update();
     }
 
-    protected new void Detach()
-    {
-        GameManagerScript.gameManager.maxOxygen -= OxyMax;
-        GameManagerScript.gameManager.oxygenSlider.maxValue -= OxyMax;
-        base.Detach();
+    new public void Die() {
+        if (attached)
+        {
+            GameManagerScript.gameManager.maxOxygen -= OxyMax;
+            GameManagerScript.gameManager.oxygenSlider.maxValue -= OxyMax;
+        }
+        base.Die();
     }
 
 void OnCollisionEnter2D(Collision2D collision)
@@ -60,6 +44,7 @@ void OnCollisionEnter2D(Collision2D collision)
     {
         GameManagerScript.gameManager.maxOxygen += OxyMax;
         GameManagerScript.gameManager.oxygenSlider.maxValue += OxyMax;
+        added = true;
         base.attach(NewParent);
     }
 }
