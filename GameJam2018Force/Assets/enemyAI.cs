@@ -6,18 +6,18 @@ public class enemyAI : MonoBehaviour {
 
 	public string shipType = "Fighter";
 	public bool aggroed = false;
-	public float distanceToAggroPlayer = 10;
+	public float distanceToAggroPlayer = 16;
 	public float distanceToShootPlayer = 5;
 	float distanceToPlayer = 1000;
 
 	int wanderingAIState = 0;
-	int wanderingAIStateCounter = 0;
+	int wanderingAIStateCounter = 100;
 	int wanderingAIStateCounterLength = 50;
 	float wanderingAIRotationStrength = 0.3f;
 	float maxWanderingVelocity = 1.5f;
 
 	int aggroedAIState = 0;
-	int aggroedAIStateCounter = 0;
+	int aggroedAIStateCounter = 100;
 	int aggroedAIStateCounterLength = 50;
 	float maxAggroedVelocity = 2.5f; // 1.5f
 
@@ -26,7 +26,7 @@ public class enemyAI : MonoBehaviour {
 	float yRandomMoveTo = 0;
 	float xRandomMoveTo2 = 0;
 	float yRandomMoveTo2 = 0;
-	float distanceToTurnAwayFromPlayer = 3;
+	float distanceToTurnAwayFromPlayer = 3.5f;
 	float distanceToOrbitPlayer = 4.5f;
 	public bool orbitingDirection = false;
 
@@ -38,6 +38,7 @@ public class enemyAI : MonoBehaviour {
 
 
 	public GameObject enemyProjectile;
+	public GameObject bigEnemyProjectile;
 
 	// Use this for initialization
 	void Start () {
@@ -63,9 +64,9 @@ public class enemyAI : MonoBehaviour {
 				updateOrbiterAggroAI ();
 			} else if (shipType == "Dreadnaught") {
 				maxAggroedVelocity = 1;
-				distanceToAggroPlayer = 15;
-				distanceToShootPlayer = 10;
-				distanceToTurnAwayFromPlayer = 4;
+				//distanceToAggroPlayer = 15;
+				//distanceToShootPlayer = 10;
+				distanceToTurnAwayFromPlayer = 5.5f;
 				updateFighterAggroAI ();
 			}
 
@@ -115,12 +116,12 @@ public class enemyAI : MonoBehaviour {
 		dir = playerPosition - transform.position;
 
 		// Check To Shoot Projectile
-		checkToShootProjectile();
+		//checkToShootProjectile();
 
 		aggroedAIStateCounter++;
 		if (aggroedAIStateCounter > aggroedAIStateCounterLength) {
-			aggroedAIState = Random.Range(1, 5);
-			aggroedAIStateCounterLength = Random.Range(100, 150);
+			aggroedAIState = Random.Range(0, 5);
+			aggroedAIStateCounterLength = Random.Range(70, 150);
 			aggroedAIStateCounter = 0;
 
 			// Steer Away Cancel Velocity
@@ -129,9 +130,17 @@ public class enemyAI : MonoBehaviour {
 			}
 
 			// Firing Random Rate
-			firingCooldownCounterLength = Random.Range(45,105);
+			firingCooldownCounterLength = Random.Range(45,65);
 			if (shipType == "Dreadnaught") {
-				firingCooldownCounterLength = Random.Range(45,55);
+				maxAggroedVelocity = 1.0f;
+				firingCooldownCounterLength = Random.Range(25,45);
+				distanceToTurnAwayFromPlayer = Random.Range(1.0f,3.0f);
+
+				// Sidewinding Behavior
+				if (Random.Range (0, 4) == 0) {
+					aggroedAIState = 5;
+				}
+
 			}
 
 			xRandomMoveTo = Random.Range(-10,10);
@@ -153,7 +162,7 @@ public class enemyAI : MonoBehaviour {
 		}
 
 		// Steer Directly To the Player
-		if (aggroedAIState == 1) {
+		if (aggroedAIState <= 1) {
 
 			dir = playerPosition - transform.position;
 
@@ -173,6 +182,15 @@ public class enemyAI : MonoBehaviour {
 			if (distanceToPlayer < distanceToTurnAwayFromPlayer) {
 				aggroedAIStateCounter = 0;
 				aggroedAIState = Random.Range (2, 2);
+
+				if (shipType == "Dreadnaught") {
+					GameObject.Instantiate (bigEnemyProjectile, transform.position, transform.rotation);
+				} else {
+					GameObject.Instantiate (enemyProjectile, transform.position, transform.rotation);
+				}
+
+				firingCooldownCounter = 0;
+
 			}
 				
 		}
@@ -195,6 +213,7 @@ public class enemyAI : MonoBehaviour {
 
 		}
 
+
 		// Steer Directly Offset To the Player
 		if (aggroedAIState == 3) {
 
@@ -213,6 +232,7 @@ public class enemyAI : MonoBehaviour {
 			transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.AngleAxis (angle + 90, Vector3.forward), turningSpeed * Time.deltaTime);
 
 		}
+
 			
 		// Steer at an offset away from Player
 		if (aggroedAIState == 4) {
@@ -230,6 +250,20 @@ public class enemyAI : MonoBehaviour {
 			float angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg;
 			//transform.rotation = Quaternion.AngleAxis (angle + 90, Vector3.forward);
 			transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.AngleAxis (angle + 90, Vector3.forward), turningSpeed * Time.deltaTime);
+
+		}
+
+		if (aggroedAIState == 5) {
+
+			// Face sidewide to Player
+			float angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg;
+			transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.AngleAxis (angle + 90, Vector3.forward), turningSpeed * Time.deltaTime);
+
+			dir = playerPosition - transform.position;
+			gameObject.GetComponent<Rigidbody2D> ().AddForce (dir);
+			if (gameObject.GetComponent<Rigidbody2D> ().velocity.magnitude > maxAggroedVelocity) {
+				gameObject.GetComponent<Rigidbody2D> ().velocity = gameObject.GetComponent<Rigidbody2D> ().velocity.normalized * maxAggroedVelocity;
+			}
 
 		}
 			
@@ -409,7 +443,13 @@ public class enemyAI : MonoBehaviour {
 				// Fire Missle
 				firingCooldownCounter++;
 				if (firingCooldownCounter > firingCooldownCounterLength) {
-					GameObject.Instantiate (enemyProjectile, transform.position, transform.rotation);
+					if (shipType == "Dreadnaught") {
+						GameObject.Instantiate (bigEnemyProjectile, transform.position, transform.rotation);
+					} else {
+						GameObject.Instantiate (enemyProjectile, transform.position, transform.rotation);
+					}
+					aggroedAIState = 2; // Go Away from Player
+					aggroedAIStateCounter = 0;
 					firingCooldownCounter = 0;
 				}
 					
