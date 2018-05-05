@@ -15,11 +15,17 @@ public class GameManagerScript : MonoBehaviour {
     public float maxOxygen = 100;
     public float oxygenDepleteRate = 0.8f;
     public Slider oxygenSlider;
+    public float currentHealth = 100f;
+    public float maxHealth = 100f;
+    public Slider healthSlider;
+    public float gameAreaSize = 500f;
+    public float tractorBeamSpeed = 500f;
     // Use this for initialization
     void Start() {
         gameManager = this;
         powerSlider.maxValue = maxPower;
         oxygenSlider.maxValue = maxPower;
+        healthSlider.maxValue = maxHealth;
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -27,6 +33,8 @@ public class GameManagerScript : MonoBehaviour {
     void Update() {
         powerManagement();
         leakOxygen();
+        checkHealth();
+        checkBounds();
     }
 
     private void powerManagement(){
@@ -46,5 +54,32 @@ public class GameManagerScript : MonoBehaviour {
         {
             oxygen = maxOxygen;
         }
+    }
+
+    public void checkHealth()
+    {
+        if (currentHealth < 0)
+        {
+            gameOver();
+        }
+        healthSlider.value = currentHealth;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+    }
+
+    public void checkBounds()
+    {
+        Vector3 direction = player.transform.position - transform.position;
+        if (direction.magnitude > gameAreaSize)
+        {
+            player.GetComponent<Rigidbody2D>().AddForce(-direction);
+        }
+    }
+
+    public void gameOver()
+    {
+        Debug.Log("over");
     }
 }

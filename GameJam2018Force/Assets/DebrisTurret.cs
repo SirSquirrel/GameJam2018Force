@@ -15,29 +15,8 @@ public class DebrisTurret : Debris{
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if (GameManagerScript.gameManager.selected == this)
-        {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                GameManagerScript.gameManager.selected = null;
-                GetComponent<SpriteRenderer>().color = Color.white;
-            }
-            else if (!glued && Input.GetKey(KeyCode.Space) && mouseSelectionCounter < Time.time)
-            {
-                Detach();
-            }
-        }
-        if (reContactReady && reContactCounter < Time.time)
-        {
-            gameObject.layer = 9;
-
-            foreach (Transform child in transform)
-            {
-                child.gameObject.layer = 9;
-            }
-            reContactReady = false;
-        }
+	new void Update () {
+        base.Update();
         if (activated)
         {
             Shoot();

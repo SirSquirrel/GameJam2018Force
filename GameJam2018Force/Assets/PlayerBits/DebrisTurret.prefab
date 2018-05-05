@@ -182,7 +182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attached: 0
   maxSpeedPerThrow: 5
-  currentHP: 100
+  currentHP: 30
   glued: 0
   bullet: {fileID: 1452831092697778, guid: b935c7b75acdcca48bf828ed2971ad59, type: 2}
   activated: 0

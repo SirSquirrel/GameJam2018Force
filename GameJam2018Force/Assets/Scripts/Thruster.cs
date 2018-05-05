@@ -11,36 +11,11 @@ public class Thruster : Debris {
 	void Start () {
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (!attached && activated == true)
-        {
-            activated = false;
-        }
 
-        if (GameManagerScript.gameManager.selected == this)
-        {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                GameManagerScript.gameManager.selected = null;
-                GetComponent<SpriteRenderer>().color = Color.white;
-            }
-            else if (!glued && Input.GetKey(KeyCode.Space) && mouseSelectionCounter < Time.time)
-            {
-                Detach();
-            }
-        }
-        if (reContactReady && reContactCounter < Time.time)
-        {
-            gameObject.layer = 9;
-
-            foreach (Transform child in transform)
-            {
-                child.gameObject.layer = 9;
-            }
-            reContactReady = false;
-        }
+    // Update is called once per frame
+    new void Update()
+    {
+        base.Update();
         if (activated)
         {
             Push();

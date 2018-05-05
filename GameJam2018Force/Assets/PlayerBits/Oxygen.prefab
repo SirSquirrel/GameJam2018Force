@@ -182,7 +182,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attached: 0
   maxSpeedPerThrow: 5
-  currentHP: 100
+  currentHP: 20
+  glued: 0
   oxygen: 10
 --- !u!212 &212048067036782708
 SpriteRenderer:

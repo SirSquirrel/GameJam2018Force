@@ -6,6 +6,8 @@ public class projectile : MonoBehaviour {
 
 	public float projectileSpeed = 10.0f;
 
+    public float damage = 10f;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -24,10 +26,16 @@ public class projectile : MonoBehaviour {
 		// Destroy Debre ship Collided With
 		if ((target.gameObject.layer == 8) || (target.gameObject.layer == 10) || (target.gameObject.layer == 11)) { // Attached or Thrown Debre
 
-			GameObject.Destroy(target.gameObject);
-			// Decrease HP instead******
+            if ((target.gameObject.layer == 10) || (target.gameObject.layer == 11))
+            {
+                target.GetComponent<Debris>().currentHP -= damage;
+            }
+            else if ((target.gameObject.layer == 8))
+            {
+                GameManagerScript.gameManager.currentHealth -= damage;
+            }
 
-		}
+        }
 
 
 		// Play Explosion on Destruction of Enemy Ship

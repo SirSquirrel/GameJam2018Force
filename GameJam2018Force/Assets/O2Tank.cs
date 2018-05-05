@@ -33,6 +33,10 @@ public class O2Tank : Debris {
             }
             reContactReady = false;
         }
+        if (currentHP <= 0)
+        {
+            Die();
+        }
     }
 
     protected new void Detach()

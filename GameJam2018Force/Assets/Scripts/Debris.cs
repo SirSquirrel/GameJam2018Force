@@ -10,17 +10,23 @@ public class Debris : MonoBehaviour {
     protected float reContactCooldown = 2f;
     protected float reContactCounter = 0f;
     protected bool reContactReady = false;
-    float speedModifier = 15;
+    public float speedModifier = 15;
     float objectBonusSpeed = 2;
     public float maxSpeedPerThrow = 5;
-    public float currentHP = 100f;
-    float maxHP = 100f;
+    public float currentHP = 20f;
+    float maxHP = 20f;
     public bool glued = false;
 
     // Use this for initialization
     void Start () {
 		
 	}
+
+    public void Die()
+    {
+        AudioManager.audioManager.playExplosion();
+        Destroy(gameObject);
+    }
 	
 	// Update is called once per frame
 	public void Update () {
@@ -48,6 +54,10 @@ public class Debris : MonoBehaviour {
         if (attached)
         {
             gameObject.GetComponent<Rigidbody2D>().velocity = GameManagerScript.gameManager.player.GetComponent<Rigidbody2D>().velocity;
+        }
+        if (currentHP <= 0)
+        {
+            Die();
         }
     }
 

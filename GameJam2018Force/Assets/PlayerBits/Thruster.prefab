@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61676700950144956}
   - component: {fileID: 114164201026374468}
   - component: {fileID: 82922358730607154}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Thruster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,6 +182,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attached: 0
   maxSpeedPerThrow: 5
+  currentHP: 30
+  glued: 0
+  activated: 0
 --- !u!212 &212643139958753754
 SpriteRenderer:
   m_ObjectHideFlags: 1
