@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Art\GameManagerScript.cs" />
+    <Compile Include="Assets\enemyAI.cs" />
     <Compile Include="Assets\Scripts\Debris.cs" />
     <Compile Include="Assets\Scripts\PlayerControlScript.cs" />
   </ItemGroup>
