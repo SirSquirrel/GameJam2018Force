@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4355482711536636}
   - component: {fileID: 114000700110873626}
   - component: {fileID: 114859025704994118}
+  - component: {fileID: 82927711813262048}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -41,6 +42,86 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &82927711813262048
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1337863491367596}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114000700110873626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -54,6 +135,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   selected: {fileID: 0}
+  power: 100
+  maxPower: 100
+  powerRegenRate: 1
+  powerSlider: {fileID: 0}
+  oxygen: 100
+  maxOxygen: 100
+  oxygenDepleteRate: 0.1
+  oxygenSlider: {fileID: 0}
 --- !u!114 &114859025704994118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -65,7 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7eada179fcb1bb429f46bf7b9d9b53e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  select: {fileID: 0}
-  shoot: {fileID: 0}
-  detach: {fileID: 0}
-  explosion: {fileID: 0}
+  select: {fileID: 8300000, guid: d46cd0921bcc3064d914e2c51a157f48, type: 3}
+  shoot: {fileID: 8300000, guid: 8ab1405476cca0d4fa4ba24a5693fbce, type: 3}
+  detach: {fileID: 8300000, guid: 3a3994aa28af8ba4892a3377b311a1da, type: 3}
+  explosion: {fileID: 8300000, guid: dfa8fe26b25e28c48b774227f46551a0, type: 3}
+  deSelect: {fileID: 8300000, guid: 16ea720d0f9e2c54c872cc32286c3bba, type: 3}

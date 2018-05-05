@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Debris : MonoBehaviour {
-
-    bool selected = false;
+    
     public bool attached = false;
     float mouseSelectionCooldown = 0.2f;
-    float mouseSelectionCounter = 0f;
-    float reContactCooldown = 2f;
-    float reContactCounter = 0f;
-    bool reContactReady = false;
+    protected float mouseSelectionCounter = 0f;
+    protected float reContactCooldown = 2f;
+    protected float reContactCounter = 0f;
+    protected bool reContactReady = false;
     float speedModifier = 15;
     public float maxSpeedPerThrow = 5;
+    public float currentHP = 100f;
+    float maxHP = 100f;
 
     // Use this for initialization
     void Start () {
@@ -25,6 +26,7 @@ public class Debris : MonoBehaviour {
             if (Input.GetMouseButtonDown(1))
             {
                 GameManagerScript.gameManager.selected = null;
+                GetComponent<SpriteRenderer>().color = Color.white;
             }
             else if (Input.GetMouseButtonDown(0) && mouseSelectionCounter < Time.time)
             {
@@ -43,15 +45,16 @@ public class Debris : MonoBehaviour {
         }
     }
 
-    private void Detach()
+    protected void Detach()
     {
+        GetComponent<SpriteRenderer>().color = Color.white;
+        GameManagerScript.gameManager.selected = null;
         gameObject.layer = 11;
         foreach (Transform child in transform)
         {
             child.gameObject.layer = 11;
         }
         GetComponent<AudioSource>().PlayOneShot(AudioManager.audioManager.detach);
-        selected = false;
         attached = false;
         reContactCounter = Time.time + reContactCooldown;
         gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
@@ -68,7 +71,7 @@ public class Debris : MonoBehaviour {
         GameManagerScript.gameManager.player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-dir.x, -dir.y));
     }
 
-    void attach(GameObject NewParent)
+    protected void attach(GameObject NewParent)
     {
         if (NewParent.GetComponent<Debris>())
         {
@@ -90,7 +93,7 @@ public class Debris : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.layer == 10 || collision.gameObject.layer == 8)
         {
@@ -102,9 +105,9 @@ public class Debris : MonoBehaviour {
     {
         if (GameManagerScript.gameManager.selected == null && attached)
         {
+            GetComponent<SpriteRenderer>().color = Color.green;
             GameManagerScript.gameManager.selected = this;
             GetComponent<AudioSource>().PlayOneShot(AudioManager.audioManager.select);
-            selected = true;
             mouseSelectionCounter = mouseSelectionCooldown + Time.time;
         }
     }
