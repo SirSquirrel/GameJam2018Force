@@ -2,23 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Thruster : Debris {
-    float thrustSpeed = 12f;
-    float powerUse = 5f;
-    public bool activated = false;
+public class DebrisTurret : Debris{
 
-	// Use this for initialization
-	void Start () {
+    float fireRate = 2f;
+    float fireCounter = 0f;
+    float powerUse = 5f;
+    public GameObject bullet;
+    public bool activated = false;
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (!attached && activated == true)
-        {
-            activated = false;
-        }
-
         if (GameManagerScript.gameManager.selected == this)
         {
             if (Input.GetKey(KeyCode.LeftShift))
@@ -43,13 +40,14 @@ public class Thruster : Debris {
         }
         if (activated)
         {
-            Push();
+            Shoot();
         }
     }
 
     void OnMouseOver()
     {
-        if(Input.GetMouseButtonDown(1)){
+        if (Input.GetMouseButtonDown(1))
+        {
             if (!activated)
             {
                 activated = true;
@@ -63,11 +61,14 @@ public class Thruster : Debris {
         }
     }
 
-    protected void Push()
+    protected void Shoot()
     {
-        if (GameManagerScript.gameManager.power > powerUse) {
-            GameManagerScript.gameManager.power -= powerUse * Time.deltaTime;
-            GameManagerScript.gameManager.player.GetComponent<Rigidbody2D>().AddForce(transform.up * thrustSpeed * Time.deltaTime);
+        if (GameManagerScript.gameManager.power > powerUse && fireCounter < Time.time)
+        {
+            fireCounter = Time.time + fireRate;
+            //no time.delta time because there is a timer
+            GameManagerScript.gameManager.power -= powerUse;
+            GameObject.Instantiate(bullet,transform.position,transform.rotation);
         }
     }
 

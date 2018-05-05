@@ -137,11 +137,11 @@ MonoBehaviour:
   selected: {fileID: 0}
   power: 100
   maxPower: 100
-  powerRegenRate: 1
+  powerRegenRate: 2
   powerSlider: {fileID: 0}
   oxygen: 100
   maxOxygen: 100
-  oxygenDepleteRate: 0.1
+  oxygenDepleteRate: 0.4
   oxygenSlider: {fileID: 0}
 --- !u!114 &114859025704994118
 MonoBehaviour:

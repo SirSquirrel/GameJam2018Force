@@ -9,11 +9,11 @@ public class GameManagerScript : MonoBehaviour {
     public static GameManagerScript gameManager;
     public float power = 100;
     public float maxPower = 100;
-    public float powerRegenRate = 1f;
+    public float powerRegenRate = 2f;
     public Slider powerSlider;
     public float oxygen = 100;
     public float maxOxygen = 100;
-    public float oxygenDepleteRate = 0.2f;
+    public float oxygenDepleteRate = 0.8f;
     public Slider oxygenSlider;
     // Use this for initialization
     void Start() {

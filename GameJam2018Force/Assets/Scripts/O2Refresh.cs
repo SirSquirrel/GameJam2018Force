@@ -9,10 +9,20 @@ public class O2Refresh : Debris {
 		
 	}
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!attached)
+        {
+            if (collision.gameObject.layer == 10 || collision.gameObject.layer == 8)
+            {
+                attach(collision.gameObject);
+            }
+        }
+    }
+
     protected new void attach(GameObject NewParent)
     {
         GameManagerScript.gameManager.oxygen += oxygen;
-        Debug.Log(oxygen);
         oxygen = 0;
         base.attach(NewParent);
     }
