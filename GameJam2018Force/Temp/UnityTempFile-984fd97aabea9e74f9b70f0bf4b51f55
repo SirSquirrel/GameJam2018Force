@@ -101,12 +101,15 @@
 -define:UNITY_EDITOR_WIN
 -define:ENABLE_NATIVE_ARRAY_CHECKS
 -define:UNITY_TEAM_LICENSE
-Assets/Art/GameManagerScript.cs
 Assets/AudioManager.cs
 Assets/enemyAI.cs
-Assets/projectile.cs
 Assets/Scripts/Debris.cs
+Assets/Scripts/followCamera.cs
+Assets/Scripts/GameManagerScript.cs
+Assets/Scripts/O2Refresh.cs
 Assets/Scripts/PlayerControlScript.cs
+Assets/Scripts/projectile.cs
+Assets/Scripts/Thruster.cs
 -r:"C:\Program Files\Unity\Editor\Data\Mono\lib\mono\unity\System.Runtime.Serialization.dll"
 -r:"C:\Program Files\Unity\Editor\Data\Mono\lib\mono\unity\System.Xml.Linq.dll"
 -r:"C:\Program Files\Unity\Editor\Data\Mono\lib\mono\unity\UnityScript.dll"

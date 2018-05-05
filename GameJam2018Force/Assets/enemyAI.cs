@@ -19,7 +19,7 @@ public class enemyAI : MonoBehaviour {
 	int aggroedAIState = 0;
 	int aggroedAIStateCounter = 0;
 	int aggroedAIStateCounterLength = 50;
-	float maxAggroedVelocity = 1.5f;
+	float maxAggroedVelocity = 2.5f; // 1.5f
 
 	float turningSpeed = 3.0f;
 	float xRandomMoveTo = 0;
@@ -27,6 +27,8 @@ public class enemyAI : MonoBehaviour {
 	float xRandomMoveTo2 = 0;
 	float yRandomMoveTo2 = 0;
 	float distanceToTurnAwayFromPlayer = 3;
+	float distanceToOrbitPlayer = 4.5f;
+	public bool orbitingDirection = false;
 
 	int firingCooldownCounter = 0;
 	int firingCooldownCounterLength = 50;
@@ -45,7 +47,6 @@ public class enemyAI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
 		// Enemy Ship Disengaged Wandering AI
 		if (aggroed == false) {
 			updateWanderingAI();
@@ -55,24 +56,22 @@ public class enemyAI : MonoBehaviour {
 		// Enemy Ship Aggroed Player AI
 		if (aggroed) {
 
-
 			// Enemy Ship Aggroed Movement AI
-			updateFighterAggroAI();
-
-
-
-
+			if (shipType == "Fighter") {
+				updateFighterAggroAI ();
+			} else if (shipType == "Orbiter") {
+				updateOrbiterAggroAI ();
+			} else if (shipType == "Dreadnaught") {
+				maxAggroedVelocity = 1;
+				distanceToAggroPlayer = 15;
+				distanceToShootPlayer = 10;
+				distanceToTurnAwayFromPlayer = 4;
+				updateFighterAggroAI ();
+			}
 
 		}
-
-
-
-
+			
 	}
-
-
-
-
 
 
 	void updateWanderingAI() {
@@ -106,7 +105,6 @@ public class enemyAI : MonoBehaviour {
 
 		if (distanceToPlayer < distanceToAggroPlayer) {
 			aggroed = true;
-			Debug.Log ("Enemy Ship Aggroed Player because In Detection Range! " + distanceToPlayer + "  " + distanceToAggroPlayer);
 		}
 
 	}
@@ -122,7 +120,7 @@ public class enemyAI : MonoBehaviour {
 		aggroedAIStateCounter++;
 		if (aggroedAIStateCounter > aggroedAIStateCounterLength) {
 			aggroedAIState = Random.Range(1, 5);
-			aggroedAIStateCounterLength = Random.Range(100, 250);
+			aggroedAIStateCounterLength = Random.Range(100, 150);
 			aggroedAIStateCounter = 0;
 
 			// Steer Away Cancel Velocity
@@ -131,7 +129,10 @@ public class enemyAI : MonoBehaviour {
 			}
 
 			// Firing Random Rate
-			firingCooldownCounterLength = Random.Range(45,55);
+			firingCooldownCounterLength = Random.Range(45,105);
+			if (shipType == "Dreadnaught") {
+				firingCooldownCounterLength = Random.Range(45,55);
+			}
 
 			xRandomMoveTo = Random.Range(-10,10);
 			yRandomMoveTo = Random.Range(-10,10);
@@ -235,6 +236,132 @@ public class enemyAI : MonoBehaviour {
 	}
 
 	void updateOrbiterAggroAI() {
+
+		distanceToPlayer = Vector2.Distance (transform.position,GameManagerScript.gameManager.player.transform.position);
+
+
+		aggroedAIStateCounter++;
+		if (aggroedAIStateCounter > aggroedAIStateCounterLength) {
+			aggroedAIState = 2;// Random.Range (1, 3);
+			aggroedAIStateCounterLength = Random.Range (100, 250);
+			aggroedAIStateCounter = 0;
+
+			// Firing Random Rate
+			firingCooldownCounterLength = Random.Range(55,155);
+
+			// Within Orbit Range - Orbit Player
+			if (distanceToPlayer < distanceToOrbitPlayer) {
+				aggroedAIState = 1;
+			}
+				
+		}
+
+		// If Enemy Ship too Close to Player Turn Away
+		if (distanceToPlayer < distanceToTurnAwayFromPlayer) {
+			aggroedAIStateCounter = 0;
+			aggroedAIState = 3;
+		}
+
+		// Orbit Player
+		if (aggroedAIState == 1) {
+			playerPosition = GameManagerScript.gameManager.player.transform.position;
+			dir = playerPosition - transform.position;
+
+			// Face sidewide to Player
+			float angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg;
+			if (orbitingDirection) {
+				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.AngleAxis ((angle + 0), Vector3.forward), turningSpeed * Time.deltaTime);
+			} else {
+				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.AngleAxis ((angle + 180), Vector3.forward), turningSpeed * Time.deltaTime);
+			}
+
+			dir = playerPosition - transform.position;
+
+			// Orbiting Velocity
+			gameObject.GetComponent<Rigidbody2D>().velocity = -transform.up * 2;
+
+
+
+			// Fire Missle
+			firingCooldownCounter++;
+			if (firingCooldownCounter > firingCooldownCounterLength) {
+
+				if (orbitingDirection) {
+					GameObject bullet = GameObject.Instantiate (enemyProjectile, transform.position, transform.rotation);
+					bullet.transform.Rotate (0, 0, 90);
+				} else {
+					GameObject bullet = GameObject.Instantiate (enemyProjectile, transform.position, transform.rotation);
+					bullet.transform.Rotate (0, 0, -90);
+				}
+
+				firingCooldownCounter = 0;
+			}
+				
+		}
+
+		// Moving In toward player
+		if (aggroedAIState == 2) {
+			playerPosition = GameManagerScript.gameManager.player.transform.position;
+			dir = playerPosition - transform.position;
+
+			// Face sidewide to Player
+			float angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg;
+			if (orbitingDirection) {
+				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.AngleAxis ((angle + 25), Vector3.forward), turningSpeed * Time.deltaTime);
+			} else {
+				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.AngleAxis ((angle - 25 + 180), Vector3.forward), turningSpeed * Time.deltaTime);
+			}
+
+			dir = playerPosition - transform.position;
+
+			// Orbiting Velocity
+			gameObject.GetComponent<Rigidbody2D>().velocity = -transform.up * 2;
+		}
+
+		// Moving Out toward player
+		if (aggroedAIState == 3) {
+			playerPosition = GameManagerScript.gameManager.player.transform.position;
+			dir = playerPosition - transform.position;
+
+			// Face sidewide to Player
+			float angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg;
+			if (orbitingDirection) {
+				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.AngleAxis ((angle - 25), Vector3.forward), turningSpeed * Time.deltaTime);
+			} else {
+				transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.AngleAxis ((angle + 25 + 180), Vector3.forward), turningSpeed * Time.deltaTime);
+			}
+
+			dir = playerPosition - transform.position;
+
+			// Orbiting Velocity
+			gameObject.GetComponent<Rigidbody2D>().velocity = -transform.up * 2;
+		}
+
+
+		// Sidewinding Behavior
+		/*
+		// Face sidewide to Player
+		float angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg;
+		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.AngleAxis (angle + 90, Vector3.forward), turningSpeed * Time.deltaTime);
+
+		dir = playerPosition - transform.position;
+		gameObject.GetComponent<Rigidbody2D> ().AddForce (dir);
+		if (gameObject.GetComponent<Rigidbody2D> ().velocity.magnitude > maxAggroedVelocity) {
+			gameObject.GetComponent<Rigidbody2D> ().velocity = gameObject.GetComponent<Rigidbody2D> ().velocity.normalized * maxAggroedVelocity;
+		}
+		*/
+
+
+
+		// Swooping out behavior
+		//gameObject.GetComponent<Rigidbody2D>().AddForce(-transform.up);
+
+		/*
+		//gameObject.GetComponent<Rigidbody2D> ().AddForce (dir);
+		if (gameObject.GetComponent<Rigidbody2D> ().velocity.magnitude > maxAggroedVelocity) {
+			gameObject.GetComponent<Rigidbody2D> ().velocity = gameObject.GetComponent<Rigidbody2D> ().velocity.normalized * maxAggroedVelocity;
+		}
+		*/
 
 
 	}
