@@ -17,4 +17,23 @@ public class projectile : MonoBehaviour {
 		gameObject.GetComponent<Rigidbody2D>().velocity = -transform.up * projectileSpeed;
 
 	}
+
+	void OnTriggerEnter2D(Collider2D target) {
+
+
+		// Destroy Debre ship Collided With
+		if ((target.gameObject.layer == 8) || (target.gameObject.layer == 10) || (target.gameObject.layer == 11)) { // Attached or Thrown Debre
+
+			GameObject.Destroy(target.gameObject);
+			// Decrease HP instead******
+
+		}
+
+
+		// Play Explosion on Destruction of Enemy Ship
+		AudioManager.audioManager.playExplosion();
+		GameObject.Destroy(gameObject);
+
+	}
+
 }

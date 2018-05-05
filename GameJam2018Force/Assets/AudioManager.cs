@@ -18,4 +18,8 @@ public class AudioManager : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	public void playExplosion(){
+		GetComponent<AudioSource> ().PlayOneShot (explosion);
+	}
 }
