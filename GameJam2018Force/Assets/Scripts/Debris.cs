@@ -35,13 +35,14 @@ public class Debris : MonoBehaviour {
     {
         selected = false;
         attached = false;
-        gameObject.layer = 9;
         gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
         Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 dir = target - transform.position;
+        
         if (dir.magnitude > maxSpeedPerThrow)
         {
         }
+        dir = dir * (transform.childCount + 1);
         dir = dir * speedModifier;
         transform.parent = null;
         gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(dir.x, dir.y));
