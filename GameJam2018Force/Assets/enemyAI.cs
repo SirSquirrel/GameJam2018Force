@@ -374,7 +374,7 @@ public class enemyAI : MonoBehaviour {
 
 		if (hit) {
 			if ((hit.collider.gameObject.layer == 8) || (hit.collider.gameObject.layer == 10) || (hit.collider.gameObject.layer == 11)) {
-				Debug.Log ("DETECTED");
+				//Debug.Log ("DETECTED");
 				return true;
 			}
 		}

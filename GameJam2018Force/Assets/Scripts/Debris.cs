@@ -84,6 +84,7 @@ public class Debris : MonoBehaviour {
         transform.parent = null;
         GameManagerScript.gameManager.player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-dir.x, -dir.y));
         dir = dir * objectBonusSpeed;
+        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(dir.x, dir.y));
         attached = false;
         foreach (Transform child in transform)
