@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/KevinTest.unity
     guid: 3b48c6b91a907f34d94133d66f11f5e0
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: ad2253f06940b4f4ea97d86f9732d28c

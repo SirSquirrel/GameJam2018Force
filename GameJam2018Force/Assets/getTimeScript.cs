@@ -9,7 +9,7 @@ public class getTimeScript : MonoBehaviour {
 	void Start () {
         if (PlayerStats.timeSurvived > 0)
         {
-            GetComponent<Text>().text = "Signal Length:" + PlayerStats.timeSurvived;
+            GetComponent<Text>().text = "Signal Length:" + (int)PlayerStats.timeSurvived +" Seconds";
         }
 	}
 }
