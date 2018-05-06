@@ -39,7 +39,7 @@ public class SolarPanel : Debris {
 
     protected new void attach(GameObject NewParent)
     {
-        GameManagerScript.gameManager.powerRegenRate -= powerRegen;
+        GameManagerScript.gameManager.powerRegenRate += powerRegen;
         added = true;
         base.attach(NewParent);
     }

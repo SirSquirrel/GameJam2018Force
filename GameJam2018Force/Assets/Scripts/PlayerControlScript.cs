@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerControlScript : MonoBehaviour {
     float rotationSpeed = 0.2f;
+    float maxSpeed = 8f;
 	// Use this for initialization
 	void Start () {
 		
@@ -12,6 +13,11 @@ public class PlayerControlScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Rotate();
+        Rigidbody2D mover = GetComponent<Rigidbody2D>();
+        if (mover.velocity.magnitude > maxSpeed)
+        {
+            mover.velocity = mover.velocity.normalized * maxSpeed;
+        }
 	}
 
     void Rotate()

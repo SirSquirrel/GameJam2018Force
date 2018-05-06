@@ -63,17 +63,18 @@ public class Debris : MonoBehaviour {
 
     protected void Detach()
     {
+        Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 dir = target - transform.position;
+        foreach (Transform child in transform)
+        {
+            Debris debrisScript = child.GetComponent<Debris>();
+            debrisScript.Detach(dir);
+        }
         GetComponent<SpriteRenderer>().color = Color.white;
         GameManagerScript.gameManager.selected = null;
         gameObject.layer = 11;
-        foreach (Transform child in transform)
-        {
-            child.gameObject.layer = 11;
-        }
         GetComponent<AudioSource>().PlayOneShot(AudioManager.audioManager.detach);
         gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-        Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 dir = target - transform.position;
         reContactCounter = Time.time + reContactCooldown;
         reContactReady = true;
         if (dir.magnitude > maxSpeedPerThrow)
@@ -87,13 +88,33 @@ public class Debris : MonoBehaviour {
         gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(dir.x, dir.y));
         attached = false;
+    }
+
+    protected void Detach(Vector3 Direction)
+    {
         foreach (Transform child in transform)
         {
             Debris debrisScript = child.GetComponent<Debris>();
-            debrisScript.attached = false;
-            debrisScript.reContactCounter = Time.time + reContactCooldown;
-            debrisScript.reContactReady = true;
+            debrisScript.Detach(Direction);
         }
+        GetComponent<SpriteRenderer>().color = Color.white;
+        GameManagerScript.gameManager.selected = null;
+        gameObject.layer = 11;
+        GetComponent<AudioSource>().PlayOneShot(AudioManager.audioManager.detach);
+        gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+        reContactCounter = Time.time + reContactCooldown;
+        reContactReady = true;
+        if (Direction.magnitude > maxSpeedPerThrow)
+        {
+        }
+        Direction = Direction * (transform.childCount + 1);
+        Direction = Direction * speedModifier;
+        transform.parent = null;
+        GameManagerScript.gameManager.player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-Direction.x, -Direction.y));
+        Direction = Direction * objectBonusSpeed;
+        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(Direction.x, Direction.y));
+        attached = false;
     }
 
     protected void attach(GameObject NewParent)

@@ -25,7 +25,7 @@ public class DebrisTurret : Debris{
 
     void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && attached)
         {
             if (!activated)
             {

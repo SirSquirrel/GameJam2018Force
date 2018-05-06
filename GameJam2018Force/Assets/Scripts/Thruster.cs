@@ -24,7 +24,7 @@ public class Thruster : Debris {
 
     void OnMouseOver()
     {
-        if(Input.GetMouseButtonDown(1)){
+        if(Input.GetMouseButtonDown(1) && attached){
             if (!activated)
             {
                 activated = true;

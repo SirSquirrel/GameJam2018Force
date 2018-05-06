@@ -19,6 +19,10 @@ public class SpawnScript : MonoBehaviour {
     public float resourceSpawnRate = 2f;
     public float resourceSpawnCounter = 2f;
 
+    public List<GameObject> asteroids;
+    public float asteroidSpawnRate = 10f;
+    public float asteroidSpawnCounter = 2f;
+
     //how far they are required to spawn from the player
     public float rangeFromPlayer = 10f;
     public float spawnRange = 50f;
@@ -29,6 +33,7 @@ public class SpawnScript : MonoBehaviour {
         enemySpawnCounter = enemeySpawnRate  + Time.time;
         debrisSpawnCounter = debrisSpawnRate + Time.time;
         resourceSpawnCounter = resourceSpawnRate + Time.time;
+        asteroidSpawnCounter = asteroidSpawnRate + Time.time;
     }
 	
 	// Update is called once per frame
