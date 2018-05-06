@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: 81ebbb1033fdcd64a8e80999597b8e0a
+  - enabled: 1
+    path: Assets/Scenes/Highscore.unity
+    guid: 2d2b3e654a73ba74aa727de7e9cbd21e

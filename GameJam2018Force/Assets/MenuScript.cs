@@ -19,6 +19,11 @@ public class MenuScript : MonoBehaviour {
         SceneManager.LoadScene("Credits");
     }
 
+    public void Highscore()
+    {
+        SceneManager.LoadScene("Highscore");
+    }
+
     public void Quit()
     {
         Application.Quit();

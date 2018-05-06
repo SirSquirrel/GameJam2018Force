@@ -122,7 +122,38 @@ public class GameManagerScript : MonoBehaviour {
     {
         if (!gameEnding) {
         PlayerStats.timeSurvived = TimerScript.timerScript.counter;
-        gameEnding = true;
+
+            if (PlayerPrefs.HasKey("highScore1") && PlayerStats.timeSurvived > PlayerPrefs.GetInt("highScore1"))
+            {
+                PlayerPrefs.SetInt("highScore5", PlayerPrefs.GetInt("highScore4"));
+                PlayerPrefs.SetInt("highScore4", PlayerPrefs.GetInt("highScore3"));
+                PlayerPrefs.SetInt("highScore3", PlayerPrefs.GetInt("highScore2"));
+                PlayerPrefs.SetInt("highScore2", PlayerPrefs.GetInt("highScore1"));
+                PlayerPrefs.SetInt("highScore1", (int)PlayerStats.timeSurvived);
+            }
+            else if (PlayerPrefs.HasKey("highScore2") && PlayerStats.timeSurvived > PlayerPrefs.GetInt("highScore2"))
+            {
+                PlayerPrefs.SetInt("highScore5", PlayerPrefs.GetInt("highScore4"));
+                PlayerPrefs.SetInt("highScore4", PlayerPrefs.GetInt("highScore3"));
+                PlayerPrefs.SetInt("highScore3", PlayerPrefs.GetInt("highScore2"));
+                PlayerPrefs.SetInt("highScore2", (int)PlayerStats.timeSurvived);
+            }
+            else if (PlayerPrefs.HasKey("highScore3") && PlayerStats.timeSurvived > PlayerPrefs.GetInt("highScore3"))
+            {
+                PlayerPrefs.SetInt("highScore5", PlayerPrefs.GetInt("highScore4"));
+                PlayerPrefs.SetInt("highScore4", PlayerPrefs.GetInt("highScore3"));
+                PlayerPrefs.SetInt("highScore3", (int)PlayerStats.timeSurvived);
+            }
+            else if (PlayerPrefs.HasKey("highScore4") && PlayerStats.timeSurvived > PlayerPrefs.GetInt("highScore4"))
+            {
+                PlayerPrefs.SetInt("highScore5", PlayerPrefs.GetInt("highScore4"));
+                PlayerPrefs.SetInt("highScore4", (int)PlayerStats.timeSurvived);
+            }
+            else if (PlayerPrefs.HasKey("highScore5") && PlayerStats.timeSurvived > PlayerPrefs.GetInt("highScore5"))
+            {
+                PlayerPrefs.SetInt("highScore5", (int)PlayerStats.timeSurvived);
+            }
+            gameEnding = true;
         gameOverTimer = Time.time + 2f;
         }
         if (gameOverExplosionCounter == 0) {

@@ -9,7 +9,6 @@ public class AudioManager : MonoBehaviour {
     public AudioClip explosion;
     public AudioClip deSelect;
 
-
 	public AudioClip dreadnaughtShot;
 	public AudioClip fighterShot;
 	public AudioClip orbiterShot;

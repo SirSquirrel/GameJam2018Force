@@ -10,7 +10,7 @@ public class Debris : MonoBehaviour {
     protected float reContactCooldown = 2f;
     protected float reContactCounter = 0f;
     protected bool reContactReady = false;
-    public float speedModifier = 15;
+    float speedModifier = 75;
     float objectBonusSpeed = 2;
     public float maxSpeedPerThrow = 5;
     public float currentHP = 20f;
@@ -89,7 +89,8 @@ public class Debris : MonoBehaviour {
     public void Detach()
     {
         Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 dir = target - transform.position;
+        Vector2 dir = (target - transform.position);
+        dir.Normalize();
         foreach (Transform child in transform)
         {
             if (child.GetComponent<Debris>())
@@ -105,11 +106,9 @@ public class Debris : MonoBehaviour {
         gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
         reContactCounter = Time.time + reContactCooldown;
         reContactReady = true;
-        if (dir.magnitude > maxSpeedPerThrow)
-        {
-        }
-        dir = dir * (transform.childCount + 1);
         dir = dir * speedModifier;
+        Debug.Log(dir);
+        dir = dir * (transform.childCount + 1);
         transform.parent = null;
         GameManagerScript.gameManager.player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-dir.x, -dir.y));
         dir = dir * objectBonusSpeed;
@@ -138,8 +137,8 @@ public class Debris : MonoBehaviour {
         if (Direction.magnitude > maxSpeedPerThrow)
         {
         }
-        Direction = Direction * (transform.childCount + 1);
         Direction = Direction * speedModifier;
+        Direction = Direction * (transform.childCount + 1);
         transform.parent = null;
         GameManagerScript.gameManager.player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-Direction.x, -Direction.y));
         Direction = Direction * objectBonusSpeed;

@@ -20,6 +20,11 @@ public class DebrisTurret : Debris{
         {
             Shoot();
         }
+
+        if (activated && !attached)
+        {
+            activated = false;
+        }
     }
 
     void OnMouseOver()
