@@ -1226,6 +1226,7 @@ MonoBehaviour:
   - {fileID: 1960636335160768, guid: 4e9d8c304da53aa479fa5a7a33d720ea, type: 2}
   - {fileID: 1011194376263150, guid: 4ef8f03f54412f241a669c33997be70c, type: 2}
   - {fileID: 1023056779226060, guid: d48242116a0cbf549a6015153d297808, type: 2}
+  - {fileID: 1377022142802402, guid: 4b10342e7dcc6de47b1e3d78c7aecdc1, type: 2}
   - {fileID: 1232714273879606, guid: e0d347738e4a73a448a0ba2dae1f2466, type: 2}
   enemeySpawnRate: 8
   enemySpawnCounter: 5
