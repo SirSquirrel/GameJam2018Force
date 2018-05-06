@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManagerScript : MonoBehaviour {
     public GameObject player = null;
@@ -70,7 +71,7 @@ public class GameManagerScript : MonoBehaviour {
 
     public void gameOver()
     {
-
-        Debug.Log("over");
+        PlayerStats.timeSurvived = TimerScript.timerScript.counter;
+        SceneManager.LoadScene("GameOver");
     }
 }
