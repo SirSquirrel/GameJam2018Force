@@ -17,9 +17,13 @@ public class Debris : MonoBehaviour {
     float maxHP = 20f;
     public bool glued = false;
 
-    // Use this for initialization
-    void Start () {
+	public ParticleSystem damagedHullEffect;
+	public bool emittingDamagedHullEffect = false;
 
+    // Use this for initialization
+	void Start () {
+
+		damagedHullEffect = GetComponentInChildren<ParticleSystem>();
 	}
 
     public void Die()
@@ -33,6 +37,24 @@ public class Debris : MonoBehaviour {
 	
 	// Update is called once per frame
 	public void Update () {
+
+		// Damaged Hull Effect
+		if (attached) {
+			if (currentHP <= maxHP * 0.6f) {
+				//damagedHullEffect.GetComponent<ParticleSystem>().Play();
+				damagedHullEffect.Play();
+				emittingDamagedHullEffect = true;
+			}
+			else if (emittingDamagedHullEffect) {
+				if (currentHP > maxHP * 0.6f) {
+					//damagedHullEffect.GetComponent<ParticleSystem>().Stop();
+					damagedHullEffect.Stop();
+					emittingDamagedHullEffect = false;
+				}
+			}
+		
+		}
+
         if (GameManagerScript.gameManager.selected == this) {
             if (Input.GetKey(KeyCode.LeftShift))
             {
