@@ -9,7 +9,7 @@ public class DebrisTurret : Debris{
     float powerUse = 5f;
     public GameObject bullet;
     public bool activated = false;
-    // Use this for initialization
+	public bool rotates = false;
     void Start () {
 		
 	}
