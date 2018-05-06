@@ -21,6 +21,7 @@ public class GameManagerScript : MonoBehaviour {
     public Slider healthSlider;
     public GameObject gameOverText;
 
+	int gameOverExplosionCounter = 0;
 
 	public ParticleSystem damagedHullEffect;
 	public bool emittingDamagedHullEffect = false;
@@ -97,19 +98,93 @@ public class GameManagerScript : MonoBehaviour {
 
     public void checkHealth()
     {
-        if (currentHealth < 0)
-        {
-            gameOver();
-        }
         healthSlider.value = currentHealth;
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
         }
+		if (currentHealth <= 0)
+		{
+			gameOver();
+		}
     }
 
     public void gameOver()
     {
+		/*
+		Object explosionEffect = Resources.Load ("Explosion");
+		Vector3 newPos = transform.position;
+		newPos.x += Random.Range(-1.0f,1.0f);
+		newPos.y += Random.Range(-1.0f,1.0f);
+		Object.Instantiate (explosionEffect, newPos, transform.rotation);
+		AudioManager.audioManager.playExplosion();
+		*/
+
+
+
+
+		if (gameOverExplosionCounter == 0) {
+			Object explosionEffect = Resources.Load ("Explosion");
+			Vector3 newPos = transform.position;
+			newPos.x += Random.Range(-1.0f,1.0f);
+			newPos.y += Random.Range(-1.0f,1.0f);
+			Object.Instantiate (explosionEffect, newPos, transform.rotation);
+			AudioManager.audioManager.playExplosion();
+		}
+		if (gameOverExplosionCounter == 30) {
+			Object explosionEffect = Resources.Load ("Explosion");
+			Vector3 newPos = transform.position;
+			newPos.x += Random.Range(-1.0f,1.0f);
+			newPos.y += Random.Range(-1.0f,1.0f);
+			Object.Instantiate (explosionEffect, newPos, transform.rotation);
+			AudioManager.audioManager.playExplosion();
+		}
+		if (gameOverExplosionCounter == 60) {
+			Object explosionEffect = Resources.Load ("Explosion");
+			Vector3 newPos = transform.position;
+			newPos.x += Random.Range(-1.0f,1.0f);
+			newPos.y += Random.Range(-1.0f,1.0f);
+			Object.Instantiate (explosionEffect, newPos, transform.rotation);
+			AudioManager.audioManager.playExplosion();
+		}
+		if (gameOverExplosionCounter == 70) {
+			Object explosionEffect = Resources.Load ("Explosion");
+			Vector3 newPos = transform.position;
+			newPos.x += Random.Range(-1.0f,1.0f);
+			newPos.y += Random.Range(-1.0f,1.0f);
+			Object.Instantiate (explosionEffect, newPos, transform.rotation);
+			AudioManager.audioManager.playExplosion();
+		}
+		if (gameOverExplosionCounter == 90) {
+			Object explosionEffect = Resources.Load ("Explosion");
+			Vector3 newPos = transform.position;
+			newPos.x += Random.Range(-1.0f,1.0f);
+			newPos.y += Random.Range(-1.0f,1.0f);
+			Object.Instantiate (explosionEffect, newPos, transform.rotation);
+			AudioManager.audioManager.playExplosion();
+		}
+		if (gameOverExplosionCounter == 120) {
+			Object explosionEffect = Resources.Load ("Explosion");
+			Vector3 newPos = transform.position;
+			newPos.x += Random.Range(-1.0f,1.0f);
+			newPos.y += Random.Range(-1.0f,1.0f);
+			Object.Instantiate (explosionEffect, newPos, transform.rotation);
+			AudioManager.audioManager.playExplosion();
+		}
+		if (gameOverExplosionCounter == 125) {
+			Object explosionEffect = Resources.Load ("Explosion");
+			Vector3 newPos = transform.position;
+			newPos.x += Random.Range(-1.0f,1.0f);
+			newPos.y += Random.Range(-1.0f,1.0f);
+			Object.Instantiate (explosionEffect, newPos, transform.rotation);
+			AudioManager.audioManager.playExplosion();
+		}
+
+
+		gameOverExplosionCounter++;
+
+
+
         PlayerStats.timeSurvived = TimerScript.timerScript.counter;
         SceneManager.LoadScene("GameOver");
     }

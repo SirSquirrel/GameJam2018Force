@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControlScript : MonoBehaviour {
-    float rotationSpeed = 0.2f;
+    float rotationSpeed = 0.45f;
     float maxSpeed = 8f;
 	// Use this for initialization
 	void Start () {

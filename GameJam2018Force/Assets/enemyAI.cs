@@ -48,6 +48,10 @@ public class enemyAI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		if (shipType == "Dreadnaught") {
+			enemyShipHP = 30;
+		}
 		
 	}
 
@@ -448,11 +452,19 @@ public class enemyAI : MonoBehaviour {
 
 				GameManagerScript.gameManager.currentHealth -= ramDamage;
 
+				if (this.gameObject.GetComponent<enemyAI> ().shipType == "Dreadnaught") {
+					GameManagerScript.gameManager.currentHealth -= ramDamage * 2;
+				}
+
 			}
 
 			if ((target.gameObject.layer == 10) || (target.gameObject.layer == 11)) { // Debre Layer
 
 				target.gameObject.GetComponent<Debris>().currentHP -= ramDamage;
+
+				if (this.gameObject.GetComponent<enemyAI> ().shipType == "Dreadnaught") {
+					target.gameObject.GetComponent<Debris>().currentHP -= ramDamage * 2;
+				}
 
 			}
 
