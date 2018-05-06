@@ -1339,6 +1339,16 @@ Prefab:
       propertyPath: m_Name
       value: Debris10 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 82306767456940626, guid: a2dbb8c27a670fc4381d9755fd5ea898,
+        type: 2}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82306767456940626, guid: a2dbb8c27a670fc4381d9755fd5ea898,
+        type: 2}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a2dbb8c27a670fc4381d9755fd5ea898, type: 2}
   m_IsPrefabParent: 0
@@ -1794,6 +1804,21 @@ Prefab:
       propertyPath: healthSlider
       value: 
       objectReference: {fileID: 2048196747}
+    - target: {fileID: 114818925008050498, guid: 60ef090c94749ae448a2aa58156c9da9,
+        type: 2}
+      propertyPath: detach
+      value: 
+      objectReference: {fileID: 8300000, guid: 5f18314db77c70347a0fe25387037bca, type: 3}
+    - target: {fileID: 114818925008050498, guid: 60ef090c94749ae448a2aa58156c9da9,
+        type: 2}
+      propertyPath: select
+      value: 
+      objectReference: {fileID: 8300000, guid: 808a42db8aae10343b5b6fcb029beea9, type: 3}
+    - target: {fileID: 114818925008050498, guid: 60ef090c94749ae448a2aa58156c9da9,
+        type: 2}
+      propertyPath: deSelect
+      value: 
+      objectReference: {fileID: 8300000, guid: 808a42db8aae10343b5b6fcb029beea9, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 60ef090c94749ae448a2aa58156c9da9, type: 2}
   m_IsPrefabParent: 0

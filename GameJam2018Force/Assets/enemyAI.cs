@@ -77,6 +77,7 @@ public class enemyAI : MonoBehaviour {
 				maxAggroedVelocity = 0.5f;
 				//distanceToAggroPlayer = 15;
 				//distanceToShootPlayer = 10;
+				distanceToShootPlayer = 10;
 				distanceToTurnAwayFromPlayer = 5.5f;
 				turningSpeed = 0.8f;
 				updateFighterAggroAI ();
@@ -239,6 +240,7 @@ public class enemyAI : MonoBehaviour {
 				aggroedAIStateCounter = 0;
 				aggroedAIState = Random.Range (2, 2);
 
+				AudioManager.audioManager.playFighterShot();
 				GameObject.Instantiate (enemyProjectile, transform.position, transform.rotation);
 
 				firingCooldownCounter = 0;
@@ -381,6 +383,7 @@ public class enemyAI : MonoBehaviour {
 					bullet.transform.Rotate (0, 0, -90);
 				}
 
+				AudioManager.audioManager.playOrbiterShot();
 				firingCooldownCounter = 0;
 			}
 				
@@ -455,6 +458,9 @@ public class enemyAI : MonoBehaviour {
 				if (this.gameObject.GetComponent<enemyAI> ().shipType == "Dreadnaught") {
 					GameManagerScript.gameManager.currentHealth -= ramDamage * 2;
 				}
+				if (this.gameObject.GetComponent<enemyAI> ().shipType == "AlienK") {
+					GameManagerScript.gameManager.currentHealth -= ramDamage * 2;
+				}
 
 			}
 
@@ -465,13 +471,13 @@ public class enemyAI : MonoBehaviour {
 				if (this.gameObject.GetComponent<enemyAI> ().shipType == "Dreadnaught") {
 					target.gameObject.GetComponent<Debris>().currentHP -= ramDamage * 2;
 				}
+				if (this.gameObject.GetComponent<enemyAI> ().shipType == "AlienK") {
+					target.gameObject.GetComponent<Debris>().currentHP -= ramDamage * 2;
+				}
 
 			}
 
-
 		}
-
-
 			
 		// Play Explosion on Destruction of Enemy Ship
 		AudioManager.audioManager.playExplosion();
@@ -494,8 +500,10 @@ public class enemyAI : MonoBehaviour {
 				if (firingCooldownCounter > firingCooldownCounterLength) {
 					if (shipType == "Dreadnaught") {
 						GameObject.Instantiate (bigEnemyProjectile, transform.position, transform.rotation);
+						AudioManager.audioManager.playDreadnaughtShot();
 					} else {
 						GameObject.Instantiate (enemyProjectile, transform.position, transform.rotation);
+						AudioManager.audioManager.playFighterShot();
 					}
 					aggroedAIState = 2; // Go Away from Player
 					aggroedAIStateCounter = 0;
@@ -519,8 +527,10 @@ public class enemyAI : MonoBehaviour {
 				if (firingCooldownCounter > firingCooldownCounterLength) {
 					if (shipType == "Dreadnaught") {
 						GameObject.Instantiate (bigEnemyProjectile, transform.position, transform.rotation);
+						AudioManager.audioManager.playDreadnaughtShot();
 					} else {
 						GameObject.Instantiate (enemyProjectile, transform.position, transform.rotation);
+						AudioManager.audioManager.playFighterShot();
 					}
 					firingCooldownCounter = 0;
 				}
