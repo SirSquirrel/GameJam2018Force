@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4205816390327870}
   - component: {fileID: 212697894389168688}
   - component: {fileID: 50860175708962506}
-  - component: {fileID: 58853530735248830}
   - component: {fileID: 114852564444068042}
+  - component: {fileID: 60342178644226174}
   m_Layer: 15
   m_Name: OrganicAsteroid3
   m_TagString: Untagged
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1060481663824870}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5790517, y: 2.4461544, z: 0}
+  m_LocalPosition: {x: -7.1596584, y: -7.9120946, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,8 +63,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &58853530735248830
-CircleCollider2D:
+--- !u!60 &60342178644226174
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -75,9 +75,28 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.01, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.20428002
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.75, y: 0.75}
+    newSize: {x: 0.75, y: 0.75}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.195, y: 0.255}
+      - {x: -0.275, y: 0.255}
+      - {x: -0.345, y: 0.125}
+      - {x: -0.345, y: -0.125}
+      - {x: -0.255, y: -0.255}
+      - {x: -0.044999998, y: -0.275}
+      - {x: 0.225, y: -0.275}
+      - {x: 0.265, y: -0.24499999}
+      - {x: 0.305, y: -0.185}
+      - {x: 0.305, y: 0.035}
 --- !u!114 &114852564444068042
 MonoBehaviour:
   m_ObjectHideFlags: 1
