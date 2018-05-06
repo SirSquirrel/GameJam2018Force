@@ -71,6 +71,10 @@ public class enemyAI : MonoBehaviour {
 				distanceToTurnAwayFromPlayer = 5.5f;
 				turningSpeed = 0.8f;
 				updateFighterAggroAI ();
+			} else if (shipType == "AlienK") {
+				turningSpeed = 7f;
+				maxAggroedVelocity = 3.0f;
+				updateAlienKAggroAI();
 			}
 
 		}
@@ -109,6 +113,28 @@ public class enemyAI : MonoBehaviour {
 		if (distanceToPlayer < distanceToAggroPlayer) {
 			aggroed = true;
 		}
+
+	}
+
+	void updateAlienKAggroAI() {
+
+		playerPosition = GameManagerScript.gameManager.player.transform.position;
+		dir = playerPosition - transform.position;
+
+
+		dir = playerPosition - transform.position;
+
+		// Move toward the Player
+		gameObject.GetComponent<Rigidbody2D> ().AddForce (dir);
+		if (gameObject.GetComponent<Rigidbody2D> ().velocity.magnitude > maxAggroedVelocity) {
+			gameObject.GetComponent<Rigidbody2D> ().velocity = gameObject.GetComponent<Rigidbody2D> ().velocity.normalized * maxAggroedVelocity;
+		}
+
+		// Face the Player
+		float angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg;
+		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.AngleAxis (angle + 90, Vector3.forward), turningSpeed * Time.deltaTime);
+
+
 
 	}
 
@@ -283,7 +309,6 @@ public class enemyAI : MonoBehaviour {
 	void updateOrbiterAggroAI() {
 
 		distanceToPlayer = Vector2.Distance (transform.position,GameManagerScript.gameManager.player.transform.position);
-
 
 		aggroedAIStateCounter++;
 		if (aggroedAIStateCounter > aggroedAIStateCounterLength) {
