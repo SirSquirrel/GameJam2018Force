@@ -17,7 +17,10 @@ public class WorldWrapper : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D collision)
     {
         Vector3 direction = collision.transform.position - transform.position;
-        collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         collision.transform.position -= new Vector3 (2*direction.x, 2 * direction.y,0);
+        if (collision.gameObject.GetComponent<Rigidbody2D>())
+        {
+            collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
     }
 }

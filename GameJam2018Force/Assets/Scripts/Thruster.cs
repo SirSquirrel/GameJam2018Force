@@ -29,7 +29,9 @@ public class Thruster : Debris {
             if (!activated)
             {
 				activated = true;
-				foreach (ParticleSystem c in thrustingEffect) {
+                transform.FindChild("ToggleOff").gameObject.SetActive(false);
+                transform.FindChild("ToggleOn").gameObject.SetActive(true);
+                foreach (ParticleSystem c in thrustingEffect) {
 					Debug.Log (c.gameObject.name);
 					if (c.gameObject.name != "smokingHullEffect") {
 						c.Play ();
@@ -40,7 +42,9 @@ public class Thruster : Debris {
             else if (activated)
             {
 				activated = false;
-				foreach (ParticleSystem c in thrustingEffect) {
+                transform.FindChild("ToggleOff").gameObject.SetActive(true);
+                transform.FindChild("ToggleOn").gameObject.SetActive(false);
+                foreach (ParticleSystem c in thrustingEffect) {
 					if (c.gameObject.name != "smokingHullEffect") {
 						c.Stop ();
 					}

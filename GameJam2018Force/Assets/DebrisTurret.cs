@@ -29,11 +29,15 @@ public class DebrisTurret : Debris{
             if (!activated)
             {
                 activated = true;
+                transform.FindChild("ToggleOff").gameObject.SetActive(false);
+                transform.FindChild("ToggleOn").gameObject.SetActive(true);
                 GetComponent<SpriteRenderer>().color = Color.yellow;
             }
             else if (activated)
             {
                 activated = false;
+                transform.FindChild("ToggleOff").gameObject.SetActive(true);
+                transform.FindChild("ToggleOn").gameObject.SetActive(false);
                 GetComponent<SpriteRenderer>().color = Color.white;
             }
         }

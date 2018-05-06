@@ -24,9 +24,9 @@ public class projectile : MonoBehaviour {
 
 
 		// Destroy Debre ship Collided With
-		if ((target.gameObject.layer == 8) || (target.gameObject.layer == 10) || (target.gameObject.layer == 11)) { // Attached or Thrown Debre
+		if ((target.gameObject.layer == 8) || (target.gameObject.layer == 10) || (target.gameObject.layer == 11) || (target.gameObject.layer == 9)) { // Attached or Thrown Debre
 
-            if ((target.gameObject.layer == 10) || (target.gameObject.layer == 11))
+            if ((target.gameObject.layer == 10) || (target.gameObject.layer == 11) || (target.gameObject.layer == 9))
             {
                 target.GetComponent<Debris>().currentHP -= damage;
             }

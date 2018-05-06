@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class RotateTurretChassis : Debris{
    
+    new void Update()
+    {
+        if (GetComponentInChildren<RotateTurret>().activated && attached == false)
+        {
+            GetComponentInChildren<RotateTurret>().activated = false;
+        }
+        base.Update();
+    }
 
     void OnMouseOver()
     {
@@ -12,12 +20,16 @@ public class RotateTurretChassis : Debris{
             bool activated = GetComponentInChildren<RotateTurret>().activated;
             if (!activated)
             {
+                transform.FindChild("ToggleOff").gameObject.SetActive(false);
+                transform.FindChild("ToggleOn").gameObject.SetActive(true);
                 activated = true;
                 GetComponent<SpriteRenderer>().color = Color.yellow;
             }
             else if (activated)
             {
                 activated = false;
+                transform.FindChild("ToggleOff").gameObject.SetActive(true);
+                transform.FindChild("ToggleOn").gameObject.SetActive(false);
                 GetComponent<SpriteRenderer>().color = Color.white;
             }
             GetComponentInChildren<RotateTurret>().activated = activated;

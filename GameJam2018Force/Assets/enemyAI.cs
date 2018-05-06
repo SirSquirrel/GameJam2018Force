@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class enemyAI : MonoBehaviour {
 
-	int enemyShipHP = 10;
+	public int enemyShipHP = 10;
 
 	float distanceToAggroPlayer = 35;
 	float distanceToShootPlayer = 7;

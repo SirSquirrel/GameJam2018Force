@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class playerBullet : MonoBehaviour {
     public float projectileSpeed = 5.0f;
+    public float damage = 10f;
 
     // Use this for initialization
     void Start()
@@ -26,10 +27,7 @@ public class playerBullet : MonoBehaviour {
         // Destroy Debre ship Collided With
         if ((target.gameObject.layer == 12))
         { // Attached or Thrown Debre
-
-            GameObject.Destroy(target.gameObject);
-            // Decrease HP instead******
-
+            target.GetComponent<enemyAI>().enemyShipHP -= (int)damage;
         }
 
 

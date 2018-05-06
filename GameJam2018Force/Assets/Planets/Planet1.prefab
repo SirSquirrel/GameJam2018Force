@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4590730789068718}
   - component: {fileID: 212745243509054250}
   - component: {fileID: 58264927445995690}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Planet1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,8 +35,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1366116331586064}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.86, y: 4.36, z: 0}
-  m_LocalScale: {x: 4.2168674, y: 4.2168674, z: 4.2168674}
+  m_LocalPosition: {x: -1.4, y: -15.1, z: 0}
+  m_LocalScale: {x: 5.274616, y: 5.274616, z: 5.274616}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
