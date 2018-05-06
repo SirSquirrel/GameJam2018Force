@@ -41,6 +41,7 @@ public class SpawnScript : MonoBehaviour {
         enemyCheck();
         debrisCheck();
         resourceCheck();
+        asteroidCheck();
 	}
 
     void enemyCheck() {
