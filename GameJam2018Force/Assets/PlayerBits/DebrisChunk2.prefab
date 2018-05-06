@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1870936316445154}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.760798, y: -15.622357, z: 0.022460938}
+  m_LocalPosition: {x: 4.5249004, y: 2.295108, z: 0.022460938}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4465457478057732}
@@ -216,7 +216,7 @@ MonoBehaviour:
   maxSpeedPerThrow: 5
   currentHP: 20
   glued: 0
-  damagedHullEffect: {fileID: 0}
+  damagedHullEffect: {fileID: 198082646752037498}
   emittingDamagedHullEffect: 0
 --- !u!198 &198082646752037498
 ParticleSystem:
@@ -277,7 +277,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1457780341
+  randomSeed: 1935434515
   InitialModule:
     serializedVersion: 3
     enabled: 1

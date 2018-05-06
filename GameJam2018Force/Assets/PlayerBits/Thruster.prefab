@@ -278,7 +278,7 @@ MonoBehaviour:
   maxSpeedPerThrow: 5
   currentHP: 30
   glued: 0
-  damagedHullEffect: {fileID: 0}
+  damagedHullEffect: {fileID: 198013440045267032}
   emittingDamagedHullEffect: 0
   activated: 0
 --- !u!198 &198013440045267032
@@ -340,7 +340,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -231789178
+  randomSeed: -268356869
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6864,7 +6864,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 507035410
+  randomSeed: -240294862
   InitialModule:
     serializedVersion: 3
     enabled: 1

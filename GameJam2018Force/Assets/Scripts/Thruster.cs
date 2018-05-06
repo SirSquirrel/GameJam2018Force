@@ -32,7 +32,10 @@ public class Thruster : Debris {
             {
 				activated = true;
 				foreach (ParticleSystem c in thrustingEffect) {
-					c.Play();
+					Debug.Log (c.gameObject.name);
+					if (c.gameObject.name != "smokingHullEffect") {
+						c.Play ();
+					}
 				}
                 GetComponent<SpriteRenderer>().color = Color.yellow;
             }
@@ -40,7 +43,9 @@ public class Thruster : Debris {
             {
 				activated = false;
 				foreach (ParticleSystem c in thrustingEffect) {
-					c.Stop();
+					if (c.gameObject.name != "smokingHullEffect") {
+						c.Stop ();
+					}
 				}
                 GetComponent<SpriteRenderer>().color = Color.white;
             }
@@ -51,10 +56,11 @@ public class Thruster : Debris {
 	{
 		if (GameManagerScript.gameManager.power <= powerUse) {
 			foreach (ParticleSystem c in thrustingEffect) {
-
-				activated = false;
-				c.Stop ();
-				GetComponent<SpriteRenderer>().color = Color.white;
+				if (c.gameObject.name != "smokingHullEffect") {
+					activated = false;
+					c.Stop ();
+					GetComponent<SpriteRenderer> ().color = Color.white;
+				}
 
 				//ParticleSystem.EmissionModule em = c.emission;
 				//em.rateOverTime = new ParticleSystem.MinMaxCurve (100.0f, new AnimationCurve());
