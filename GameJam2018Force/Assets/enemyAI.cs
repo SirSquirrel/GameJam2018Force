@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class enemyAI : MonoBehaviour {
 
+	int enemyShipHP = 10;
+
 	float distanceToAggroPlayer = 35;
 	float distanceToShootPlayer = 7;
 	float maxWanderingVelocity = 1.5f;
@@ -42,6 +44,8 @@ public class enemyAI : MonoBehaviour {
 	public GameObject enemyProjectile;
 	public GameObject bigEnemyProjectile;
 
+	public int ramDamage = 10;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -77,6 +81,14 @@ public class enemyAI : MonoBehaviour {
 				updateAlienKAggroAI();
 			}
 
+		}
+
+		// Destroy Enemy Ship
+		if (enemyShipHP <= 0) {
+			Object explosionEffect = Resources.Load ("Explosion");
+			Object.Instantiate (explosionEffect, transform.position, transform.rotation);
+			AudioManager.audioManager.playExplosion();
+			GameObject.Destroy(gameObject);
 		}
 			
 	}
@@ -431,14 +443,29 @@ public class enemyAI : MonoBehaviour {
 		// Destroy Debre ship Collided With
 		if ((target.gameObject.layer == 8) || (target.gameObject.layer == 10) || (target.gameObject.layer == 11)) { // Attached or Thrown Debre
 
-			GameObject.Destroy(target.gameObject);
-			// Decrease HP instead******
+			if (target.gameObject.layer == 8) { // Player Layer
+
+				GameManagerScript.gameManager.currentHealth -= ramDamage;
+
+			}
+
+			if ((target.gameObject.layer == 10) || (target.gameObject.layer == 11)) { // Debre Layer
+
+				target.gameObject.GetComponent<Debris>().currentHP -= ramDamage;
+
+			}
+
 
 		}
+
+
 			
 		// Play Explosion on Destruction of Enemy Ship
 		AudioManager.audioManager.playExplosion();
-		GameObject.Destroy(gameObject);
+		//GameObject.Destroy(gameObject);
+
+		// Enemy Ship Takes Damage from Collision
+		this.gameObject.GetComponent<enemyAI>().enemyShipHP -= ramDamage;
 
 	}
 
