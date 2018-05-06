@@ -37,7 +37,8 @@ public class RotateTurret : MonoBehaviour {
             fireCounter = Time.time + fireRate;
             //no time.delta time because there is a timer
             GameManagerScript.gameManager.power -= powerUse;
-            GameObject.Instantiate(bullet, transform.position, transform.rotation);
+            bullet = GameObject.Instantiate(bullet, transform.position, transform.rotation);
+            bullet.transform.Rotate(0,0,180);
         }
     }
 }

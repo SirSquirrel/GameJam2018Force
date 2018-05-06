@@ -39,15 +39,17 @@ public class SpawnScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         enemyCheck();
+        debrisCheck();
+        resourceCheck();
 	}
 
     void enemyCheck() {
         if (enemySpawnCounter < Time.time)
         {
-            Vector3 spawnPoint = Random.insideUnitCircle * spawnRange;
+            Vector3 spawnPoint = (Random.insideUnitCircle * spawnRange) + (Vector2)transform.position;
             while ((GameManagerScript.gameManager.player.transform.position - spawnPoint).magnitude < rangeFromPlayer)
             {
-                spawnPoint = Random.insideUnitCircle * spawnRange;
+                spawnPoint = (Random.insideUnitCircle * spawnRange) + (Vector2)transform.position;
             }
             int enemyNum = Random.Range(0,enemies.Count);
 
@@ -67,10 +69,10 @@ public class SpawnScript : MonoBehaviour {
     {
         if (debrisSpawnCounter < Time.time)
         {
-            Vector3 spawnPoint = Random.insideUnitCircle * spawnRange;
+            Vector3 spawnPoint = (Random.insideUnitCircle * spawnRange) + (Vector2)transform.position;
             while ((GameManagerScript.gameManager.player.transform.position - spawnPoint).magnitude < rangeFromPlayer)
             {
-                spawnPoint = Random.insideUnitCircle * spawnRange;
+                spawnPoint = (Random.insideUnitCircle * spawnRange) + (Vector2)transform.position;
             }
             int debrisNum = Random.Range(0, debris.Count);
 
@@ -85,17 +87,34 @@ public class SpawnScript : MonoBehaviour {
     {
         if (debrisSpawnCounter < Time.time)
         {
-            Vector3 spawnPoint = Random.insideUnitCircle * spawnRange;
+            Vector3 spawnPoint = (Random.insideUnitCircle * spawnRange) + (Vector2)transform.position;
             while ((GameManagerScript.gameManager.player.transform.position - spawnPoint).magnitude < rangeFromPlayer)
             {
-                spawnPoint = Random.insideUnitCircle * spawnRange;
+                spawnPoint = (Random.insideUnitCircle * spawnRange) + (Vector2)transform.position;
             }
             int resourceNum = Random.Range(0, debris.Count);
 
             GameObject resourceChunk = GameObject.Instantiate(resources[resourceNum], spawnPoint, transform.rotation);
             resourceChunk.transform.Rotate(0, 0, Random.Range(0, 360));
-            resourceNum += 1;
             resourceSpawnCounter = resourceSpawnRate + +Time.time;
+        }
+    }
+
+    void asteroidCheck()
+    {
+        if (asteroidSpawnCounter < Time.time)
+        {
+            Vector3 spawnPoint = (Random.insideUnitCircle * spawnRange) + (Vector2)transform.position;
+            while ((GameManagerScript.gameManager.player.transform.position - spawnPoint).magnitude < rangeFromPlayer)
+            {
+                spawnPoint = (Random.insideUnitCircle * spawnRange) + (Vector2)transform.position;
+            }
+            int asteroidNum = Random.Range(0, asteroids.Count);
+
+            GameObject asteroid = GameObject.Instantiate(asteroids[asteroidNum], spawnPoint, transform.rotation);
+            asteroid.transform.Rotate(0, 0, Random.Range(0, 360));
+            asteroidNum += 1;
+            asteroidSpawnCounter = asteroidSpawnRate +Time.time;
         }
     }
 }
