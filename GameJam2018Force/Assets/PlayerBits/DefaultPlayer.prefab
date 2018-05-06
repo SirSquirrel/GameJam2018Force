@@ -1306,6 +1306,11 @@ MonoBehaviour:
   - {fileID: 1345487147763086, guid: 31aa2b45825e54a45a4685e4ddb1e768, type: 2}
   - {fileID: 1298676026774514, guid: f29d885663886e1419ec2f6e64001d8d, type: 2}
   - {fileID: 1390178713207180, guid: 06999c864d6ed6443bdde8c4a47862c7, type: 2}
+  - {fileID: 1275322150588858, guid: d7e948fa9001ba54b96673e43241db41, type: 2}
+  - {fileID: 1013423324565130, guid: a2dbb8c27a670fc4381d9755fd5ea898, type: 2}
+  - {fileID: 1457094604096736, guid: 47734a3606911844db5a1705d30dfaf4, type: 2}
+  - {fileID: 1288146805217372, guid: 9ff5dd5c3b704e24ba05fb9f13952e77, type: 2}
+  - {fileID: 1621520554454156, guid: 1f39cd2ff0c07f84b9f6b4a51adba174, type: 2}
   debrisSpawnRate: 2
   debrisSpawnCounter: 1
   resources:
@@ -1424,7 +1429,8 @@ MonoBehaviour:
   currentHealth: 100
   maxHealth: 100
   healthSlider: {fileID: 0}
-  gameOverText: {fileID: 0}
+  gameEnding: 0
+  gameOverTimer: 0
   damagedHullEffect: {fileID: 198284137897961812}
   emittingDamagedHullEffect: 0
   damagedHullEffectSevere: {fileID: 198091623237592762}

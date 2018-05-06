@@ -19,7 +19,8 @@ public class GameManagerScript : MonoBehaviour {
     public float currentHealth = 100f;
     public float maxHealth = 100f;
     public Slider healthSlider;
-    public GameObject gameOverText;
+    public bool gameEnding = false;
+    public float gameOverTimer = 0f;
 
 	int gameOverExplosionCounter = 0;
 
@@ -43,11 +44,15 @@ public class GameManagerScript : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
+        if (gameEnding && gameOverTimer < Time.time)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
         powerManagement();
         leakOxygen();
         checkHealth();
-        //checkBounds();
 		damagedHullLogic();
     }
 
@@ -94,6 +99,10 @@ public class GameManagerScript : MonoBehaviour {
         {
             oxygen = maxOxygen;
         }
+        if (oxygen <= 0)
+        {
+            gameOver();
+        }
     }
 
     public void checkHealth()
@@ -111,19 +120,12 @@ public class GameManagerScript : MonoBehaviour {
 
     public void gameOver()
     {
-		/*
-		Object explosionEffect = Resources.Load ("Explosion");
-		Vector3 newPos = transform.position;
-		newPos.x += Random.Range(-1.0f,1.0f);
-		newPos.y += Random.Range(-1.0f,1.0f);
-		Object.Instantiate (explosionEffect, newPos, transform.rotation);
-		AudioManager.audioManager.playExplosion();
-		*/
-
-
-
-
-		if (gameOverExplosionCounter == 0) {
+        if (!gameEnding) {
+        PlayerStats.timeSurvived = TimerScript.timerScript.counter;
+        gameEnding = true;
+        gameOverTimer = Time.time + 2f;
+        }
+        if (gameOverExplosionCounter == 0) {
 			Object explosionEffect = Resources.Load ("Explosion");
 			Vector3 newPos = transform.position;
 			newPos.x += Random.Range(-1.0f,1.0f);
@@ -179,13 +181,6 @@ public class GameManagerScript : MonoBehaviour {
 			Object.Instantiate (explosionEffect, newPos, transform.rotation);
 			AudioManager.audioManager.playExplosion();
 		}
-
-
-		gameOverExplosionCounter++;
-
-
-
-        PlayerStats.timeSurvived = TimerScript.timerScript.counter;
-        SceneManager.LoadScene("GameOver");
+        gameOverExplosionCounter++;
     }
 }

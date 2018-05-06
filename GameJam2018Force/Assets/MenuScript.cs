@@ -14,6 +14,11 @@ public class MenuScript : MonoBehaviour {
         SceneManager.LoadScene("kevinTest");
     }
 
+    public void Credits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
     public void Quit()
     {
         Application.Quit();
