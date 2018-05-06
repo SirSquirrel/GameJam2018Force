@@ -19,11 +19,14 @@ public class Debris : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
+
 	}
 
     public void Die()
     {
+		Object explosionEffect = Resources.Load ("Explosion");
+		Object.Instantiate (explosionEffect, transform.position, transform.rotation);
+
         AudioManager.audioManager.playExplosion();
         Destroy(gameObject);
     }
