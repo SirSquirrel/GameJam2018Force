@@ -18,11 +18,11 @@ public class Thruster : Debris {
     // Update is called once per frame
     new void Update()
     {
-        base.Update();
         if (activated)
         {
             Push();
         }
+        base.Update();
     }
 
     void OnMouseOver()

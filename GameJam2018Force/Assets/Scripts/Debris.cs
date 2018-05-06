@@ -86,14 +86,17 @@ public class Debris : MonoBehaviour {
         }
     }
 
-    protected void Detach()
+    public void Detach()
     {
         Vector3 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 dir = target - transform.position;
         foreach (Transform child in transform)
         {
-            Debris debrisScript = child.GetComponent<Debris>();
-            debrisScript.Detach(dir);
+            if (child.GetComponent<Debris>())
+            {
+                Debris debrisScript = child.GetComponent<Debris>();
+                debrisScript.Detach(dir);
+            }
         }
         GetComponent<SpriteRenderer>().color = Color.white;
         GameManagerScript.gameManager.selected = null;
@@ -115,12 +118,15 @@ public class Debris : MonoBehaviour {
         attached = false;
     }
 
-    protected void Detach(Vector3 Direction)
+    public void Detach(Vector3 Direction)
     {
         foreach (Transform child in transform)
         {
-            Debris debrisScript = child.GetComponent<Debris>();
-            debrisScript.Detach(Direction);
+            if (child.GetComponent<Debris>())
+            {
+                Debris debrisScript = child.GetComponent<Debris>();
+                debrisScript.Detach(Direction);
+            }
         }
         GetComponent<SpriteRenderer>().color = Color.white;
         GameManagerScript.gameManager.selected = null;
