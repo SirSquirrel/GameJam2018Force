@@ -18,6 +18,7 @@ public class GameManagerScript : MonoBehaviour {
     public float currentHealth = 100f;
     public float maxHealth = 100f;
     public Slider healthSlider;
+    public GameObject gameOverText;
     // Use this for initialization
     void Start() {
         gameManager = this;
@@ -69,6 +70,7 @@ public class GameManagerScript : MonoBehaviour {
 
     public void gameOver()
     {
+
         Debug.Log("over");
     }
 }
