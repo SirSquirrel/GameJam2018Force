@@ -67,6 +67,7 @@ public class enemyAI : MonoBehaviour {
 			if (shipType == "Fighter") {
 				updateFighterAggroAI ();
 			} else if (shipType == "Orbiter") {
+				distanceToPlayer = 12;
 				updateOrbiterAggroAI ();
 			} else if (shipType == "Dreadnaught") {
 				maxAggroedVelocity = 0.5f;
@@ -329,7 +330,7 @@ public class enemyAI : MonoBehaviour {
 			aggroedAIStateCounter = 0;
 
 			// Firing Random Rate
-			firingCooldownCounterLength = Random.Range(55,155);
+			firingCooldownCounterLength = Random.Range(55,125);
 
 			// Within Orbit Range - Orbit Player
 			if (distanceToPlayer < distanceToOrbitPlayer) {

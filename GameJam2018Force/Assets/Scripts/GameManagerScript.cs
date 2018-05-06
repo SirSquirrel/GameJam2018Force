@@ -20,6 +20,15 @@ public class GameManagerScript : MonoBehaviour {
     public float maxHealth = 100f;
     public Slider healthSlider;
     public GameObject gameOverText;
+
+
+	public ParticleSystem damagedHullEffect;
+	public bool emittingDamagedHullEffect = false;
+
+	public ParticleSystem damagedHullEffectSevere;
+	public bool emittingDamagedHullEffectSevere = false;
+
+
     // Use this for initialization
     void Start() {
         gameManager = this;
@@ -27,6 +36,9 @@ public class GameManagerScript : MonoBehaviour {
         oxygenSlider.maxValue = maxPower;
         healthSlider.maxValue = maxHealth;
         player = GameObject.FindGameObjectWithTag("Player");
+
+		//damagedHullEffect = GetComponentInChildren<ParticleSystem>();
+		//damagedHullEffectSevere = GetComponentInChildren<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -35,7 +47,34 @@ public class GameManagerScript : MonoBehaviour {
         leakOxygen();
         checkHealth();
         //checkBounds();
+		damagedHullLogic();
     }
+
+	private void damagedHullLogic() {
+
+		if (currentHealth <= maxHealth * 0.5f) {
+			damagedHullEffect.Play();
+			emittingDamagedHullEffect = true;
+		}
+		else if (emittingDamagedHullEffect) {
+			if (currentHealth > maxHealth * 0.5f) {
+				damagedHullEffect.Stop();
+				emittingDamagedHullEffect = false;
+			}
+		}
+			
+		if (currentHealth <= maxHealth * 0.25f) {
+			damagedHullEffectSevere.Play();
+			emittingDamagedHullEffectSevere = true;
+		}
+		else if (emittingDamagedHullEffectSevere) {
+			if (currentHealth > maxHealth * 0.25f) {
+				damagedHullEffectSevere.Stop();
+				emittingDamagedHullEffectSevere = false;
+			}
+		}
+
+	}
 
     private void powerManagement(){
         powerSlider.value = power;
