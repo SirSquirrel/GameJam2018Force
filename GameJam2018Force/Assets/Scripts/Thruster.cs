@@ -10,9 +10,7 @@ public class Thruster : Debris {
 
 	// Use this for initialization
 	void Start () {
-
 		thrustingEffect = GetComponentsInChildren<ParticleSystem>();
-
 	}
 
     // Update is called once per frame

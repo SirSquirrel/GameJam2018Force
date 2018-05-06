@@ -13,7 +13,6 @@ public class TimerScript : MonoBehaviour {
         timerText = GameObject.Find("Timer").GetComponent<Text>();
         if (timerScript == null) {
             timerScript = this;
-            Object.DontDestroyOnLoad(gameObject);
             timerScript.CountBegin();
         }
         else {
